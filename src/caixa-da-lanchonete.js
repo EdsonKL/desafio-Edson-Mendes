@@ -1,4 +1,6 @@
 
+// Classe para o funcionamento geral do desafio
+
 class CaixaDaLanchonete {
     constructor(){
         this.carrinho = {}
@@ -14,6 +16,9 @@ class CaixaDaLanchonete {
             "combo2" : 7.50
         }
     }  
+
+    // Metodo para calcular (dependente de outros metodos) o valor da compra
+
     calcularValorDaCompra(metodoDePagamento, itens) {
         try {
             this.verificarCarrinho(metodoDePagamento, itens)
@@ -29,6 +34,8 @@ class CaixaDaLanchonete {
         }      
     }
 
+    // Metodo Responsavel por aumentar/diminuir o valor total da conta, baseada no metodo de pagamento
+
     addPagamento(metodoDePagamento, total){
         if (metodoDePagamento == 'dinheiro')
             return total * 0.95
@@ -39,6 +46,8 @@ class CaixaDaLanchonete {
         return total
     } 
 
+    // Metodo para validar se o item existe no menu/cardapio
+
     verificarItem(nomeItem){
         if(this.menu.hasOwnProperty(nomeItem)){
             return true
@@ -46,12 +55,16 @@ class CaixaDaLanchonete {
             throw  'Item inválido!'
     }
 
+    // Metodo para conferir se tem, o item principal, caso haja um extra
+
     validarPrincipal(nome){
         if(!this.carrinho.hasOwnProperty(nome)){
             throw 'Item extra não pode ser pedido sem o principal'
         }
             
     }
+
+    // Metodo responsavel por conferir se 
 
     validarExtras() {
         for (const item of Object.keys(this.carrinho)) {
@@ -64,6 +77,8 @@ class CaixaDaLanchonete {
         }
     }
 
+    // Metodo para verificar se tem quantidade no itens e se o item é valido
+
     verificaQuant(nome, quant) {
         if (quant == 0){
             throw 'Quantidade inválida!'
@@ -75,6 +90,7 @@ class CaixaDaLanchonete {
             
     }
 
+    // Verifica se a forma de pagamento é valida e se existe itens no carrinho
 
     verificarCarrinho(metodoDePagamento, itens){
         if (!this.formaPagamento.includes(metodoDePagamento)){
@@ -86,7 +102,9 @@ class CaixaDaLanchonete {
         }
             
     }
-    
+
+    // Adiciona os itens no carrinho 
+
     adicionarNoCarrinho(itens){
         for (const item of itens) {
             const [nome, quant] = item.split(',')
@@ -99,6 +117,8 @@ class CaixaDaLanchonete {
         }
     }
 
+    // Faz a soma do valor
+
     valorCarrinho(){
         let total = 0
         for (const item of Object.keys(this.carrinho)){
@@ -109,7 +129,10 @@ class CaixaDaLanchonete {
 
     
 }
-const compra = new CaixaDaLanchonete().calcularValorDaCompra('dinheiro', ['cafe,1','chantily,1'])
+
+    // Exemplo de uma compra
+
+const compra = new CaixaDaLanchonete().calcularValorDaCompra('credito', ['cafe,2','sanduiche,1','chantily,1'])
 console.log(compra)
 
 
